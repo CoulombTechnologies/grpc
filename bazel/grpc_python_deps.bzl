@@ -17,7 +17,7 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@com_github_grpc_grpc//third_party/py:python_configure.bzl", "python_configure")
 
 # buildifier: disable=unnamed-macro
-def grpc_python_deps():
+def grpc_python_deps(python_headers = None):
     """Loads dependencies for gRPC Python."""
 
     # protobuf binds to the name "six", so we can't use it here.
@@ -62,7 +62,7 @@ def grpc_python_deps():
 
     native.bind(
         name = "python_headers",
-        actual = "@local_config_python//:python_headers",
+        actual = python_headers or "@local_config_python//:python_headers",
     )
 
     if "cython" not in native.existing_rules():
